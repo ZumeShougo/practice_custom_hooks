@@ -1,22 +1,14 @@
 import { useState, useEffect } from 'react';
+import useFetchData from '../hooks/useFetchData';
 
 const Post = () => {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    const fetchPost = async () => {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/posts'
-      );
-      const posts = await response.json();
-      setPosts(posts);
-    };
-    fetchPost();
-  }, []);
+  const { data } = useFetchData('https://jsonplaceholder.typicode.com/posts')
+
   return (
     <div>
       <h1>記事一覧</h1>
       <ul>
-        {posts.map((post) => (
+        {data.map((post) => (
           <li key={post.id}>{post.title}</li>
         ))}
       </ul>
